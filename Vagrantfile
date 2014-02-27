@@ -14,6 +14,7 @@ Vagrant.configure('2') do |config|
   config.vm.synced_folder 'puppet', '/usr/local/etc/puppet', :create => 'true'
 
   config.vbguest.auto_update = true
+  config.vbguest.no_remote = false
 
   config.hostmanager.enabled = true
   config.hostmanager.manage_host = true
