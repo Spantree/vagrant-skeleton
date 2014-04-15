@@ -1,6 +1,9 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# Change this to match the root project/folder name
+PROJECT_NAME = "project"
+
 Vagrant.configure('2') do |config|
   config.vm.box = 'base-precise-64'
 
@@ -10,7 +13,7 @@ Vagrant.configure('2') do |config|
   # Use this if connecting from the outside internet
   config.vm.box_url = 'http://files.vagrantup.com/precise64.box'
 
-  config.vm.synced_folder '.', '/usr/local/src/project', :create => 'true'
+  config.vm.synced_folder '.', "/usr/local/src/#{project}", :create => 'true'
   config.vm.synced_folder 'puppet', '/usr/local/etc/puppet', :create => 'true'
 
   config.vbguest.auto_update = true
