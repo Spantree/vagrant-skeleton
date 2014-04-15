@@ -43,7 +43,7 @@ Vagrant.configure('2') do |config|
     puppet.options = [
       '--verbose',
       '--debug',
-      "--modulepath=/etc/puppet/modules:${PROJECT_ROOT}/puppet/modules"
+      "--modulepath=/etc/puppet/modules:#{PROJECT_ROOT}/puppet/modules"
     ]
   end
 end
