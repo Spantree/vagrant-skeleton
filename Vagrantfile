@@ -3,6 +3,7 @@
 
 # Change this to match the root project/folder name
 PROJECT_NAME = "project"
+PROJECT_ROOT = "/usr/local/src/#{PROJECT_NAME}"
 
 Vagrant.configure('2') do |config|
   config.vm.box = 'base-precise-64'
@@ -13,8 +14,7 @@ Vagrant.configure('2') do |config|
   # Use this if connecting from the outside internet
   config.vm.box_url = 'http://files.vagrantup.com/precise64.box'
 
-  config.vm.synced_folder '.', "/usr/local/src/#{project}", :create => 'true'
-  config.vm.synced_folder 'puppet', '/usr/local/etc/puppet', :create => 'true'
+  config.vm.synced_folder '.', PROJECT_ROOT, :create => 'true'
 
   config.vbguest.auto_update = true
   config.vbguest.no_remote = false
@@ -37,10 +37,13 @@ Vagrant.configure('2') do |config|
 
   config.vm.provision :puppet do |puppet|
     puppet.manifests_path = 'puppet/manifests'
+    puppet.facter = {
+      "project_root" => PROJECT_ROOT
+    }
     puppet.options = [
       '--verbose',
       '--debug',
-      '--modulepath=/etc/puppet/modules:/usr/local/etc/puppet/modules'
+      "--modulepath=/etc/puppet/modules:${PROJECT_ROOT}/puppet/modules"
     ]
   end
 end
